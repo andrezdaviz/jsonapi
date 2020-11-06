@@ -94,4 +94,73 @@ class FilterArticlesTest extends TestCase
             ->assertSee('Other Article from February')
             ->assertDontSee('Article from January');
     }
+
+    /** @test */
+    public function cannot_filter_articles_by_unknown_filters()
+    {
+        factory(Article::class)->create();
+
+
+        $url = route('api.v1.articles.index', ['filter[unknown]' => 2]);
+
+        $this->getJson($url)
+            ->assertStatus(400);
+    }
+
+    /** @test */
+    public function can_search_articles_by_title_and_content()
+    {
+        factory(Article::class)->create([
+            'title' => 'Title Aprendible',
+            'content' => 'Content'
+        ]);
+        factory(Article::class)->create([
+            'title' => 'Another Aprendible',
+            'content' => 'Content Aprendible'
+        ]);
+        factory(Article::class)->create([
+            'title' => 'Other Title',
+            'content' => 'Content...'
+        ]);
+
+
+        $url = route('api.v1.articles.index', ['filter[search]' => 'Aprendible']);
+
+        $this->getJson($url)
+            ->assertJsonCount(2, 'data')
+            ->assertSee('Title Aprendible')
+            ->assertSee('Another Aprendible')
+            ->assertDontSee('Other Title');
+    }
+
+    /** @test */
+    public function can_search_articles_by_title_and_content_multiple_terms()
+    {
+        factory(Article::class)->create([
+            'title' => 'Title Aprendible',
+            'content' => 'Content'
+        ]);
+        factory(Article::class)->create([
+            'title' => 'Another Aprendible',
+            'content' => 'Content Aprendible'
+        ]);
+        factory(Article::class)->create([
+            'title' => 'Another Laravel Aprendible',
+            'content' => 'Content Laravel'
+        ]);
+        factory(Article::class)->create([
+            'title' => 'Other Title',
+            'content' => 'Content...'
+        ]);
+
+
+        $url = route('api.v1.articles.index', ['filter[search]' => 'Aprendible Laravel']);
+
+        $this->getJson($url)
+            ->assertJsonCount(3, 'data')
+            ->assertSee('Title Aprendible')
+            ->assertSee('Another Aprendible')
+            ->assertSee('Another Laravel Aprendible')
+            ->assertDontSee('Other Title');
+    }
 }
