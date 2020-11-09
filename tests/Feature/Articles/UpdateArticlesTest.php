@@ -30,18 +30,17 @@ class UpdateArticlesTest extends TestCase
         $article = Article::factory()->create();
 
         Sanctum::actingAs($article->user);
-        $this->jsonApi()
-            ->content([
-                'data' => [
-                    'type' => 'articles',
-                    'id' => $article->getRouteKey(),
-                    'attributes' => [
-                        'title' => 'Title changed',
-                        'slug' => 'title-changed',
-                        'content' => 'Content changed'
-                    ]
-                ]
-            ])
+        $this->jsonApi()->withData([
+
+            'type' => 'articles',
+            'id' => $article->getRouteKey(),
+            'attributes' => [
+                'title' => 'Title changed',
+                'slug' => 'title-changed',
+                'content' => 'Content changed'
+            ]
+
+        ])
             ->patch(route('api.v1.articles.update', $article))
             ->assertStatus(200);
         $this->assertDatabaseHas('articles', [
@@ -58,18 +57,17 @@ class UpdateArticlesTest extends TestCase
         $article = Article::factory()->create();
 
         Sanctum::actingAs($user = User::factory()->create());
-        $this->jsonApi()
-            ->content([
-                'data' => [
-                    'type' => 'articles',
-                    'id' => $article->getRouteKey(),
-                    'attributes' => [
-                        'title' => 'Title changed',
-                        'slug' => 'title-changed',
-                        'content' => 'Content changed'
-                    ]
-                ]
-            ])
+        $this->jsonApi()->withData([
+
+            'type' => 'articles',
+            'id' => $article->getRouteKey(),
+            'attributes' => [
+                'title' => 'Title changed',
+                'slug' => 'title-changed',
+                'content' => 'Content changed'
+            ]
+
+        ])
             ->patch(route('api.v1.articles.update', $article))
             ->assertStatus(403);
         $this->assertDatabaseMissing('articles', [
@@ -86,17 +84,16 @@ class UpdateArticlesTest extends TestCase
         $article = Article::factory()->create();
 
         Sanctum::actingAs($article->user);
-        $this->jsonApi()
-            ->content([
-                'data' => [
-                    'type' => 'articles',
-                    'id' => $article->getRouteKey(),
-                    'attributes' => [
-                        'title' => 'Title changed',
+        $this->jsonApi()->withData([
 
-                    ]
-                ]
-            ])
+            'type' => 'articles',
+            'id' => $article->getRouteKey(),
+            'attributes' => [
+                'title' => 'Title changed',
+
+            ]
+
+        ])
             ->patch(route('api.v1.articles.update', $article))
             ->assertStatus(200);
         $this->assertDatabaseHas('articles', [
@@ -111,17 +108,16 @@ class UpdateArticlesTest extends TestCase
         $article = Article::factory()->create();
 
         Sanctum::actingAs($article->user);
-        $this->jsonApi()
-            ->content([
-                'data' => [
-                    'type' => 'articles',
-                    'id' => $article->getRouteKey(),
-                    'attributes' => [
-                        'slug' => 'slug-changed',
+        $this->jsonApi()->withData([
 
-                    ]
-                ]
-            ])
+            'type' => 'articles',
+            'id' => $article->getRouteKey(),
+            'attributes' => [
+                'slug' => 'slug-changed',
+
+            ]
+
+        ])
             ->patch(route('api.v1.articles.update', $article))
             ->assertStatus(200);
         $this->assertDatabaseHas('articles', [
@@ -136,17 +132,16 @@ class UpdateArticlesTest extends TestCase
         $article = Article::factory()->create();
 
         Sanctum::actingAs($article->user);
-        $this->jsonApi()
-            ->content([
-                'data' => [
-                    'type' => 'articles',
-                    'id' => $article->getRouteKey(),
-                    'attributes' => [
-                        'content' => 'Content changed',
+        $this->jsonApi()->withData([
 
-                    ]
-                ]
-            ])
+            'type' => 'articles',
+            'id' => $article->getRouteKey(),
+            'attributes' => [
+                'content' => 'Content changed',
+
+            ]
+
+        ])
             ->patch(route('api.v1.articles.update', $article))
             ->assertStatus(200);
         $this->assertDatabaseHas('articles', [

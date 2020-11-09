@@ -1,9 +1,8 @@
 <?php
 
-namespace App\JsonApi\Articles;
+namespace App\JsonApi\Categories;
 
 use App\Rules\Slug;
-//use CloudCreativity\LaravelJsonApi\Validation\AbstractValidators;
 use CloudCreativity\LaravelJsonApi\Validation\AbstractValidators;
 use Illuminate\Validation\Rule;
 
@@ -16,10 +15,7 @@ class Validators extends AbstractValidators
      * @var string[]|null
      *      the allowed paths, an empty array for none allowed, or null to allow all paths.
      */
-    protected $allowedIncludePaths = [
-        'authors',
-        'categories'
-    ];
+    protected $allowedIncludePaths = ['articles'];
 
     /**
      * The sort field names a client is allowed send.
@@ -27,7 +23,7 @@ class Validators extends AbstractValidators
      * @var string[]|null
      *      the allowed fields, an empty array for none allowed, or null to allow all fields.
      */
-    protected $allowedSortParameters = ['title', 'content'];
+    protected $allowedSortParameters = [];
 
     /**
      * The filters a client is allowed send.
@@ -35,26 +31,27 @@ class Validators extends AbstractValidators
      * @var string[]|null
      *      the allowed filters, an empty array for none allowed, or null to allow all.
      */
-    protected $allowedFilteringParameters = ['title', 'content', 'year', 'month', 'search'];
+    protected $allowedFilteringParameters = [];
 
     /**
      * Get resource validation rules.
      *
      * @param mixed|null $record
      *      the record being updated, or null if creating a resource.
-     * @return mixed
+     * @param array $data
+     *      the data being validated
+     * @return array
      */
-    protected function rules($record, $data): array
+    protected function rules($record, array $data): array
     {
         return [
-            'title' => ['required'],
+            'name' => ['required'],
             'slug' => [
                 'required',
                 'alpha_dash',
                 new Slug,
-                Rule::unique('articles')->ignore($record)
+                Rule::unique('categories')->ignore($record)
             ],
-            'content' => ['required']
         ];
     }
 
@@ -65,8 +62,6 @@ class Validators extends AbstractValidators
      */
     protected function queryRules(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 }

@@ -12,7 +12,8 @@ class Adapter extends AbstractAdapter
     protected $guarded = ['id'];
 
     protected $includePaths = [
-        'authors' => 'user'
+        'authors' => 'user',
+        'categories' => 'category'
     ];
 
     /**
@@ -58,5 +59,10 @@ class Adapter extends AbstractAdapter
     public function authors()
     {
         return $this->belongsTo('user');
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo('category');
     }
 }
