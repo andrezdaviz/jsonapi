@@ -7,11 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Traits\hasUuid;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens, hasUuid;
+    use Notifiable, HasApiTokens, hasUuid, HasFactory;
 
     /**
      * The attributes that are mass assignable.

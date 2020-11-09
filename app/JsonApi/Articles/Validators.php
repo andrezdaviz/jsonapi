@@ -3,8 +3,8 @@
 namespace App\JsonApi\Articles;
 
 use App\Rules\Slug;
+//use CloudCreativity\LaravelJsonApi\Validation\AbstractValidators;
 use CloudCreativity\LaravelJsonApi\Validation\AbstractValidators;
-//use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Validation\Rule;
 
 class Validators extends AbstractValidators
@@ -43,7 +43,7 @@ class Validators extends AbstractValidators
      *      the record being updated, or null if creating a resource.
      * @return mixed
      */
-    protected function rules($record = null): array
+    protected function rules($record, $data): array
     {
         return [
             'title' => ['required'],

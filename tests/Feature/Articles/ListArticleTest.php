@@ -15,7 +15,7 @@ class ListArticleTest extends TestCase
     public function can_fetch_all_articles()
     {
 
-        $articles = factory(Article::class)->times(3)->create();
+        $articles = Article::factory()->times(3)->create();
 
         $response = $this->jsonApi()->get(route('api.v1.articles.index'));
 
@@ -71,7 +71,7 @@ class ListArticleTest extends TestCase
     public function can_fetch_sigle_article()
     {
 
-        $article = factory(Article::class)->create();
+        $article = Article::factory()->create();
 
         $response = $this->jsonApi()->get(route('api.v1.articles.read', $article));
 

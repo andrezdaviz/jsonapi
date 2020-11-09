@@ -14,7 +14,7 @@ class IncludeAuthorsTest extends TestCase
     /** @test */
     public function can_include_authors()
     {
-        $article = factory(Article::class)->create();
+        $article = Article::factory()->create();
 
         $this->jsonApi()
             ->includePaths('authors')
@@ -28,7 +28,7 @@ class IncludeAuthorsTest extends TestCase
     /** @test */
     public function can_fetch_related_authors()
     {
-        $article = factory(Article::class)->create();
+        $article = Article::factory()->create();
 
         $this->jsonApi()
             ->get(route('api.v1.articles.relationships.authors', $article))

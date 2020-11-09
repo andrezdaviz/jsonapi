@@ -14,9 +14,9 @@ class SortArticleTest extends TestCase
     /** @test */
     public function in_can_sort_articles_title_asc()
     {
-        factory(Article::class)->create(['title' => 'C Title']);
-        factory(Article::class)->create(['title' => 'A Title']);
-        factory(Article::class)->create(['title' => 'B Title']);
+        Article::factory()->create(['title' => 'C Title']);
+        Article::factory()->create(['title' => 'A Title']);
+        Article::factory()->create(['title' => 'B Title']);
 
         $url = route('api.v1.articles.index', ['sort' => 'title']);
 
@@ -32,9 +32,9 @@ class SortArticleTest extends TestCase
     /** @test */
     public function in_can_sort_articles_title_desc()
     {
-        factory(Article::class)->create(['title' => 'C Title']);
-        factory(Article::class)->create(['title' => 'A Title']);
-        factory(Article::class)->create(['title' => 'B Title']);
+        Article::factory()->create(['title' => 'C Title']);
+        Article::factory()->create(['title' => 'A Title']);
+        Article::factory()->create(['title' => 'B Title']);
 
         $url = route('api.v1.articles.index', ['sort' => '-title']);
 
@@ -50,15 +50,15 @@ class SortArticleTest extends TestCase
     /** @test */
     public function in_can_sort_articles_title_and_content()
     {
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'C Title',
             'content' => 'D Content'
         ]);
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'A Title',
             'content' => 'B Content'
         ]);
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'B Title',
             'content' => 'C Content'
         ]);
@@ -86,7 +86,7 @@ class SortArticleTest extends TestCase
     /** @test */
     public function in_canot_sort_articles_by_unknown_fields()
     {
-        factory(Article::class)->times(3)->create();
+        Article::factory()->times(3)->create();
 
 
         $url = route('api.v1.articles.index', 'sort=unknown');
