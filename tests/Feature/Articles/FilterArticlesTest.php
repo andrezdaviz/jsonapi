@@ -73,12 +73,12 @@ class FilterArticlesTest extends TestCase
     public function can_filter_articles_by_month()
     {
         factory(Article::class)->create([
-            'title' => 'Article from February',
-            'created_at' => now()->month(2)
+            'title' => 'Article from March',
+            'created_at' => now()->month(3)
         ]);
         factory(Article::class)->create([
-            'title' => 'Other Article from February',
-            'created_at' => now()->month(2)
+            'title' => 'Other Article from March',
+            'created_at' => now()->month(3)
         ]);
 
         factory(Article::class)->create([
