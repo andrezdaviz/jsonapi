@@ -3,6 +3,7 @@
 namespace Tests\Feature\Articles;
 
 use App\Models\Article;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -29,7 +30,9 @@ class UpdateArticlesTest extends TestCase
 
         $article = Article::factory()->create();
 
-        Sanctum::actingAs($article->user);
+        $category = Category::factory()->create();
+
+        Sanctum::actingAs($user = $article->user);
         $this->jsonApi()->withData([
 
             'type' => 'articles',
@@ -38,6 +41,20 @@ class UpdateArticlesTest extends TestCase
                 'title' => 'Title changed',
                 'slug' => 'title-changed',
                 'content' => 'Content changed'
+            ],
+            'relationships' => [
+                'authors' => [
+                    'data' => [
+                        'id' => $user->getRouteKey(),
+                        'type' => 'authors'
+                    ]
+                ],
+                'categories' => [
+                    'data' => [
+                        'id' => $category->getRouteKey(),
+                        'type' => 'categories'
+                    ]
+                ]
             ]
 
         ])
